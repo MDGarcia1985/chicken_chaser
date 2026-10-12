@@ -1,0 +1,119 @@
+# Normalized companion to the supplied extensionless master; use one canonical master in the repository.
+schema_version: 0.3.0
+document:
+  status: accepted
+  prototype_version: 0.1.0
+  companion: chicken_chaser_brief.md
+  hardware_verified: true
+  ready_for_autonomous_motion: false
+  architecture: docs/chicken_chaser_architecture.md
+  architecture_config: config/chicken_chaser_architecture.yaml
+hackathon:
+  duration_hours: 48
+  theme: computer_vision
+  entry: tracked_vehicle_chicken_chaser
+  start:
+    date: '2026-10-09'
+    time: '14:00'
+    time_zone: mountain_standard_time
+    utc_offset: -07:00
+  end:
+    date: '2026-10-11'
+    time: '14:00'
+    time_zone: mountain_standard_time
+    utc_offset: -07:00
+  winner_announcement:
+    date: '2026-10-14'
+    time: '14:30'
+    time_zone: mountain_standard_time
+    utc_offset: -07:00
+  judging_criteria:
+  - innovation
+  - ai_implementation
+  - functionality
+  - impact_and_usefulness
+  - presentation_and_polish
+  judging_scale:
+    1: Needs Work
+    2: Developing
+    3: Good
+    4: Excellent
+    5: Exceptional
+  requirements:
+    ai_disclosure: 'AI usage is required. Explain how AI was used during the presentation.
+      Attribute all work to the people or AI systems that completed it, including
+      AI-assisted work.
+
+      '
+    ethical_ai: 'Build and use AI responsibly. Do not develop solutions that intentionally
+      cause harm, violate privacy, enable discrimination, or misuse personal or sensitive
+      information.
+
+      '
+    intellectual_property: 'Respect the intellectual property of others. Use open-source
+      software, datasets, APIs, and other resources in accordance with their licenses
+      and terms.
+
+      '
+  team_size:
+    min: 1
+    max: 4
+  deliverables:
+    required:
+    - public_github_repository
+    - complete_readme
+    - project_and_codebase_documentation
+    - powerpoint_presentation_with_photos
+    optional:
+    - prototype_demonstration_video
+prototype_revision: 1
+production_revision: null
+hardware:
+- model: Arduino UNO Q
+  quantity: 1
+  role: controller
+- model: Waveshare AR0144 Stereo USB Camera (A)
+  quantity: 1
+  role: vision
+  interface: USB-C
+  enumerated_name: CCB Camera
+  selection: automatic
+- model: TF-Luna
+  quantity: 1
+  role: front_distance_sensor
+  interface: UART
+- model: VL53L0X
+  quantity: 1
+  role: rear_distance_sensor
+  interface: I2C
+- model: DC motor
+  quantity: 2
+  nominal_voltage_v: 7.5
+  role: drivetrain
+- model: DRV8871
+  quantity: 2
+  role: motor_controller
+- model: battery_pack
+  quantity: 1
+  specifications: null
+  role: power_supply
+- model: Acer USB hub
+  quantity: 1
+  role: usb_connectivity
+software:
+- name: Edge Impulse object detection for Arduino App Lab
+  url: https://docs.edgeimpulse.com/hardware/deployments/run-arduino-app-lab#object-detection
+- name: DC Motor Control
+  url: https://github.com/MDGarcia1985/DC-Motor-Control
+collaboration:
+- contributor: Michael Garcia
+  contributions:
+  - design
+  - planning
+  - research
+  - programming
+- contributor: Codex / ChatGPT
+  contributions:
+  - drafts
+  - research_assistance
+  - agentic_programming_against_validated_schemas

@@ -1,0 +1,136 @@
+# File: config/chicken_chaser_architecture.yaml
+# Purpose: Proposed architecture and unresolved configuration; not a runtime wiring file.
+# Owner: Michael Garcia. Draft contributor: Codex / ChatGPT.
+# Contact: Pending confirmation. Project license: Pending confirmation.
+# Constraint: Null motion prerequisites inhibit arming. Verification pending.
+schema_version: "0.3.0"
+architecture_revision: 1
+status: proposed
+prototype_revision: 1
+production_revision: null
+master: ../chicken_chaser_master.yaml
+brief: ../chicken_chaser_brief.md
+architecture: ../docs/chicken_chaser_architecture.md
+ready_for_autonomous_motion: false
+execution:
+  linux:
+    platform: Arduino UNO Q Debian
+    language: python
+    responsibilities: [camera_capture, detection, target_association, behavior, operator_interface, model_manifest]
+  mcu:
+    platform: Arduino UNO Q MCU
+    language: cpp
+    responsibilities: [motor_outputs, ranging, contract_validation, motion_inhibition, command_watchdog]
+    control_rate_target_hz: 100
+    control_rate_verified: false
+interfaces:
+  camera:
+    model: Waveshare AR0144 Stereo USB Camera (A)
+    connection: USB-C
+    enumerated_name: CCB Camera
+    selection: automatic
+    requested_resolution_px: [640, 480]
+    requested_fps: 30
+    capture_owner_count: 1
+    negotiated_layout: null
+    processing_view: null
+    baseline_confidence: 0.5
+    baseline_debounce_sec: 0.0
+  front_range:
+    model: TF-Luna
+    transport: UART
+    owner: mcu
+    uart_instance: null
+    tx_pin: null
+    rx_pin: null
+    baud: null
+    max_age_ms: null
+  rear_range:
+    model: VL53L0X
+    transport: I2C
+    owner: mcu
+    bus: null
+    sda_pin: null
+    scl_pin: null
+    address: null
+    max_age_ms: null
+  motor_drivers:
+    model: DRV8871
+    quantity: 2
+    owner: mcu
+    left: {in1_pin: null, in2_pin: null, invert: null}
+    right: {in1_pin: null, in2_pin: null, invert: null}
+    vm_measured_v: null
+    current_limit_a: null
+    supply_validated: false
+    stop_truth_table_validated: false
+    max_abs_duty: null
+    reversal_stop_ms: null
+  bridge:
+    implementation: installed_UNO_Q_supported_bridge
+    api_version: null
+    wire_encoding: null
+    logical_contracts: JSON_Schema
+    bounded_latest_command_queue: true
+    session_handshake_required: true
+    stale_command_protection_validated: false
+    watchdog_ms: null
+contracts:
+  config_format: YAML
+  message_fixture_format: JSON
+  schema_authority: JSON_Schema
+  schema_files_created_by_implementation_agent: true
+  reject_duplicate_yaml_keys: true
+  reject_nonfinite_numbers: true
+  missing_motion_prerequisite: inhibit_arming
+  timebase: mcu_local_monotonic_for_command_expiry
+  binary_weights_in_config: false
+behavior:
+  initial_state: DISARMED
+  states: [DISARMED, ACQUIRING, TRACKING, TARGET_LOST, BLOCKED, FAULT]
+  initial_mode: dry_run
+  steering: bounded_proportional_image_center_error
+  target_association: class_and_spatial_continuity
+  target_label: null
+  target_loss_action: stop
+  ambiguous_target_action: stop
+  obstacle_action: stop
+  auto_reverse: false
+  follow_enabled: false
+  target_max_age_ms: null
+  stable_observation_count: null
+  steering_gain: null
+  steering_deadband: null
+  stand_off_m: null
+  minimum_clearance_m: null
+  automatic_rearm: false
+planning:
+  active: reactive_visual_steering_with_range_stops
+  mapping:
+    enabled: false
+    pose_source: null
+    occupancy_grid: deferred
+    exploration: flood_fill_reachability_and_frontier_selection
+    routing: A_star
+    prerequisites: [validated_pose, calibrated_transforms, spatial_observations, footprint_and_uncertainty]
+learning:
+  mode: offline_only
+  sample_collection_enabled: false
+  stages: [collect, label, split_by_session, train, evaluate, approve, deploy, rollback]
+  online_weight_updates: false
+  model_manifest:
+    artifact: null
+    sha256: null
+    labels: null
+    preprocessing: null
+    version: null
+    evaluation_record: null
+    rollback_artifact: null
+verification:
+  governing_standard: ../docs/TEST_LOG_STANDARDS.md
+  tiers: [T0, T1, T2, T3]
+  physical_autonomy: not_executed_in_this_document
+  hardware_verified_scope: owner_statement_in_master_only
+  failed_t1_t2_t3: block_progression_except_correction_or_authorized_exception
+  arming_requires: [valid_config, valid_power, verified_pin_map, fresh_sensors, fresh_commands, explicit_operator_arm, cleared_faults]
+deferred: [RF_UWB_positioning, camera_tilt_servo, tilt_limit_switches, harvested_cliff_sensors, stereo_depth, global_localization]
