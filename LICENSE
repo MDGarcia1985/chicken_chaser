@@ -1,0 +1,18 @@
+Chicken Chaser — dual license
+
+Copyright (c) 2026 Michael Garcia
+
+Unless a file states otherwise, original Chicken Chaser code and documentation
+are licensed, at your option, under either:
+
+  - the MIT License, provided in LICENSE-MIT; or
+  - the Mozilla Public License, version 2.0, provided in LICENSE-MPL-2.0.
+
+SPDX-License-Identifier: MIT OR MPL-2.0
+
+You may choose either license for material covered by this dual-license grant.
+
+Third-party code, examples, dependencies, and other material retain their own
+copyright notices and license terms. This grant does not relicense third-party
+material, including the Arduino MPL-2.0 example embedded in the implementation
+prompt. Preserve and comply with all applicable file-specific notices.

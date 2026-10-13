@@ -1,7 +1,7 @@
 # File: config/chicken_chaser_architecture.yaml
 # Purpose: Proposed architecture and unresolved configuration; not a runtime wiring file.
 # Owner: Michael Garcia. Draft contributor: Codex / ChatGPT.
-# Contact: Pending confirmation. Project license: Pending confirmation.
+# Contact: Pending confirmation. Project license: MIT OR MPL-2.0; see ../LICENSE.
 # Constraint: Null motion prerequisites inhibit arming. Verification pending.
 schema_version: "0.3.0"
 architecture_revision: 1

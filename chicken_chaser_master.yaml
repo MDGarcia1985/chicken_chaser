@@ -2,6 +2,8 @@
 schema_version: 0.3.0
 document:
   status: accepted
+  license: MIT OR MPL-2.0
+  license_file: LICENSE
   prototype_version: 0.1.0
   companion: chicken_chaser_brief.md
   hardware_verified: true

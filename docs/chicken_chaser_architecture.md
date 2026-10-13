@@ -84,4 +84,4 @@ Follow every standard in `docs/`. Source headers and function documentation foll
 
 ## Outstanding implementation inputs
 
-Actual GPIO/UART/I2C assignment; final supply wiring and VM voltage; breakout current-limit configuration; installed App Lab/core/library versions; actual detection payload and image layout; measurable stop latency; sensor validity and timeout settings; chosen target labels and model artifact; project license and canonical contact. Leave unresolved motion-critical values null and inhibit arming. These gaps do not justify invented values or a false hardware PASS.
+Actual GPIO/UART/I2C assignment; final supply wiring and VM voltage; breakout current-limit configuration; installed App Lab/core/library versions; actual detection payload and image layout; measurable stop latency; sensor validity and timeout settings; chosen target labels and model artifact; canonical contact. Original project material is dual-licensed under MIT OR MPL-2.0; see `../LICENSE`. Leave unresolved motion-critical values null and inhibit arming. These gaps do not justify invented values or a false hardware PASS.

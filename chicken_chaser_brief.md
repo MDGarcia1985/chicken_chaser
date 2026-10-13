@@ -64,7 +64,7 @@ Required demonstrations are: repeatable camera startup; valid sensor frames with
 
 Follow all supplied standards in `docs/`: `ANNOTATION_STANDARDS.md`, `DEVNOTES_STANDARDS.md`, and `TEST_LOG_STANDARDS.md`. The implementation agent creates README, source, schemas, DEVNOTES, and TEST_LOG; none are assumed to preexist.
 
-Michael Garcia: design, planning, research, programming. Codex / ChatGPT: drafts, research assistance, and agentic programming against validated schemas. Preserve licenses for reused material; project-wide license and canonical contact remain pending confirmation.
+Michael Garcia: design, planning, research, programming. Codex / ChatGPT: drafts, research assistance, and agentic programming against validated schemas. Original project material is dual-licensed under MIT or MPL-2.0, at the recipient's option; see `LICENSE`. Preserve licenses for reused material. Canonical contact remains pending confirmation.
 
 References: [DC Motor Control](https://github.com/MDGarcia1985/DC-Motor-Control), [Edge Impulse / Arduino App Lab](https://docs.edgeimpulse.com/hardware/deployments/run-arduino-app-lab#object-detection).
 
