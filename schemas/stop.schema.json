@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "stop",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "action": {
+      "const": "stop"
+    }
+  },
+  "required": [
+    "schema_version",
+    "action"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "lease",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "session": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "remaining_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 500
+    }
+  },
+  "required": [
+    "schema_version",
+    "session",
+    "generation",
+    "epoch",
+    "remaining_ms"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "command",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "session": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "mode": {
+      "enum": [
+        "turn",
+        "follow"
+      ]
+    },
+    "left": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "right": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "observation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "observation_age_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "lifetime_ms": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 500
+    }
+  },
+  "required": [
+    "schema_version",
+    "session",
+    "sequence",
+    "generation",
+    "epoch",
+    "mode",
+    "left",
+    "right",
+    "observation",
+    "observation_age_ms",
+    "lifetime_ms"
+  ],
+  "additionalProperties": false
+}

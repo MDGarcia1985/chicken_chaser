@@ -1,0 +1,31 @@
+<!-- File: assets/index.html
+Purpose: Local dry-run operator view. Owner: Michael Garcia; contributor: Codex / ChatGPT.
+Contact / project license: Pending confirmation. Constraints: token-protected loopback controls.
+Related decision: DEV-2026-10-12-005. -->
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="control-token" content="__TOKEN__"><title>Chicken Chaser · Dry run</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#10171b;color:#e6eeef}body{max-width:1000px;margin:3rem auto;padding:0 1.5rem}h1{margin-bottom:.4rem}p{color:#a7b8bf}strong{color:#7bdcb5}.badge{display:inline-block;padding:.4rem .8rem;background:#263c32;border-radius:2rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}section{padding:1.2rem;background:#1b252c;border:1px solid #31424b;border-radius:12px}button,select{font:inherit;background:#344d5a;color:white;border:1px solid #698391;border-radius:6px;padding:.6rem .9rem;margin:.25rem;cursor:pointer}button.stop{background:#a53131;font-weight:bold}pre{white-space:pre-wrap;overflow-wrap:anywhere;color:#c7d8dd}canvas{width:100%;background:#10171b;border-radius:8px}#message{min-height:1.5em}label{display:block;margin-top:1rem}a{color:#7bdcb5}
+</style></head><body>
+<span class="badge">PROTOTYPE 0.1.0 · REVISION 1</span><h1>Chicken Chaser</h1>
+<p>Dry run · Synthetic person target and sensors · Physical motor outputs disabled</p>
+<div id="message" role="status" aria-live="polite">Connecting…</div>
+<div><button data-action="arm">Arm simulation</button><button data-action="disarm">Disarm</button><button data-action="clear">Clear fault</button><button class="stop" data-action="stop">STOP</button></div>
+<div class="grid"><section><h2>Target &amp; behavior</h2><strong id="state">DISARMED</strong><p id="reason"></p><canvas id="view" width="640" height="480" aria-label="Synthetic detection boxes"></canvas><p id="target"></p></section>
+<section><h2>Motion &amp; sensors</h2><pre id="telemetry">Waiting for status</pre><label>Simulation scenario<select id="scenario"><option value="tracking">Tracking</option><option value="lost">Target lost</option><option value="ambiguous">Ambiguous targets</option><option value="obstacle">Front obstacle</option><option value="bridge_loss">Bridge loss</option></select></label><p>Turn-only mode. Follow requires a separately enabled configuration and physical validation.</p></section>
+<section><h2>Camera &amp; model</h2><p id="camera"></p><p id="model"></p><p id="preview"></p><p>Autonomous motion readiness: <strong>false</strong></p></section></div>
+<script>
+const token=document.querySelector('meta[name=control-token]').content;
+const message=document.getElementById('message');
+/* Purpose: Send explicit local action. Design: per-run token and no retries of arm.
+Workflow: operator click. Data Handoff: acceptance feedback; failures stay visible. */
+async function control(action){try{const response=await fetch('/api/control',{method:'POST',headers:{'Content-Type':'application/json','X-Control-Token':token},body:JSON.stringify({action})});const result=await response.json();message.textContent=response.ok&&result.accepted?'Action accepted':'Action rejected; inspect faults and prerequisites';}catch(error){message.textContent='Connection lost; controls unavailable';}}
+document.querySelectorAll('[data-action]').forEach(button=>button.onclick=()=>control(button.dataset.action));
+document.getElementById('scenario').onchange=event=>control(event.target.value);
+/* Purpose: Render status safely. Design: textContent prevents detection label injection;
+polling never renews movement authority. Workflow: read-only every 250 ms.
+Data Handoff: operator display; canvas shows synthetic boxes, not camera preview. */
+async function refresh(){try{const response=await fetch('/api/status');if(!response.ok)throw Error('status unavailable');const s=await response.json();document.getElementById('state').textContent=s.behavior+' · '+s.mode;document.getElementById('reason').textContent=s.reason;document.getElementById('target').textContent=s.selected?`${s.selected.label} · ${(s.selected.confidence*100).toFixed(0)}% · frame ${s.selected.frame_id}`:'No selected target';document.getElementById('telemetry').textContent=JSON.stringify(s.telemetry,null,2);for(const field of ['camera','model','preview'])document.getElementById(field).textContent=s[field];const canvas=document.getElementById('view'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,640,480);for(const d of s.detections||[]){const [x1,y1,x2,y2]=d.box;ctx.strokeStyle='#7bdcb5';ctx.lineWidth=3;ctx.strokeRect(x1,y1,x2-x1,y2-y1);ctx.fillStyle='#e6eeef';ctx.font='18px system-ui';ctx.fillText(d.label,x1,y1-8);}}catch(error){message.textContent='Status connection lost; simulated watchdog expires without fresh commands';}finally{setTimeout(refresh,250);}}
+refresh();
+</script></body></html>

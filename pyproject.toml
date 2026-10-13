@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chicken-chaser"
+version = "0.1.0"
+description = "Fail-closed Chicken Chaser prototype and host validation tools"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3", "jsonschema==4.26.0"]
+
+[project.scripts]
+chicken-chaser = "chicken_chaser.runtime:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

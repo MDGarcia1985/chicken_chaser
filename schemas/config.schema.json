@@ -1,0 +1,497 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "config",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "prototype_revision": {
+      "const": 1
+    },
+    "ready_for_autonomous_motion": {
+      "const": false
+    },
+    "hardware": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "const": false
+        },
+        "vm_v": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 6.5,
+              "maximum": 45
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_limit_a": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.01,
+              "maximum": 3.6
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pins_verified": {
+          "const": false
+        },
+        "power_verified": {
+          "const": false
+        },
+        "timing_verified": {
+          "const": false
+        },
+        "motors": {
+          "type": "object",
+          "properties": {
+            "left": {
+              "type": "object",
+              "properties": {
+                "in1": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "in2": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "invert": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "in1",
+                "in2",
+                "invert"
+              ],
+              "additionalProperties": false
+            },
+            "right": {
+              "type": "object",
+              "properties": {
+                "in1": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "in2": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "invert": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "in1",
+                "in2",
+                "invert"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        "front_uart": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "front_baud": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rear_bus": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rear_address": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 119
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pwm_bits": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "control_period_ms": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "enabled",
+        "vm_v",
+        "current_limit_a",
+        "pins_verified",
+        "power_verified",
+        "timing_verified",
+        "motors",
+        "front_uart",
+        "front_baud",
+        "rear_bus",
+        "rear_address",
+        "pwm_bits",
+        "control_period_ms"
+      ],
+      "additionalProperties": false
+    },
+    "simulation": {
+      "type": "object",
+      "properties": {
+        "lease_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "sensor_age_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "clearance_mm": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8000
+        },
+        "max_duty": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 1
+        },
+        "deadband": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "ramp_per_s": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 10
+        },
+        "reversal_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "lease_ms",
+        "sensor_age_ms",
+        "clearance_mm",
+        "max_duty",
+        "deadband",
+        "ramp_per_s",
+        "reversal_ms"
+      ],
+      "additionalProperties": false
+    },
+    "behavior": {
+      "type": "object",
+      "properties": {
+        "target_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "stable_frames": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 100
+        },
+        "observation_age_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "gain": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "aim_x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "deadband": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "max_turn": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "max_forward": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "follow_enabled": {
+          "type": "boolean"
+        },
+        "reverse_enabled": {
+          "const": false
+        },
+        "recording_enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "target_label",
+        "confidence",
+        "stable_frames",
+        "observation_age_ms",
+        "gain",
+        "aim_x",
+        "deadband",
+        "max_turn",
+        "max_forward",
+        "follow_enabled",
+        "reverse_enabled",
+        "recording_enabled"
+      ],
+      "additionalProperties": false
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "negotiated_width": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8192
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "negotiated_height": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8192
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "layout": {
+          "anyOf": [
+            {
+              "enum": [
+                "single",
+                "stereo_horizontal"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "view": {
+          "anyOf": [
+            {
+              "enum": [
+                "single",
+                "left",
+                "right"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_mapping": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "confidence_key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "box_key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "format": {
+                  "enum": [
+                    "xyxy",
+                    "xywh"
+                  ]
+                },
+                "units": {
+                  "enum": [
+                    "pixels",
+                    "normalized"
+                  ]
+                }
+              },
+              "required": [
+                "confidence_key",
+                "box_key",
+                "format",
+                "units"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latency_bound_ms": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "negotiated_width",
+        "negotiated_height",
+        "layout",
+        "view",
+        "payload_mapping",
+        "latency_bound_ms"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "prototype_revision",
+    "ready_for_autonomous_motion",
+    "hardware",
+    "simulation",
+    "behavior",
+    "camera"
+  ],
+  "additionalProperties": false
+}
